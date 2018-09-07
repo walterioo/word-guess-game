@@ -10,5 +10,5 @@
 * Repeated keys wont be counted
 * Have fun!
 ## test
-![](word-guess-game/assets/images/screenshot.png)
+![](/assets/images/screenshot.png)
     

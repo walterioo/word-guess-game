@@ -26,7 +26,7 @@ function getIndexes(key) {
     while (index != -1) {
         wordDashes[index] = randomWord[index];
         index = randomLowerCase.indexOf(key, index + 1);
-        console.log(wordDashes);
+        
     }
  
 // Function to show gif when user wins or loses    
@@ -48,7 +48,7 @@ function gameStart() {
     randomLowerCase = randomWord.toLowerCase().split("");           // converts the array to lower case
     randomWord = randomWord.split("");
     guesses = randomWord.length;  // guesses equals to the length of the word
-    console.log(randomWord);
+    
 
 // Creates the hidden word with "-" and pushes it to wordDahses
   for (var i = 0; i < randomWord.length; i++) {

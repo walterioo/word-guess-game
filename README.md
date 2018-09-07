@@ -2,7 +2,8 @@
 ## Link to wroking game
 [Guess the video game](https://walterioo.github.io/word-guess-game)
 ## Sceenshot
-![](https://raw.github.com/walterioo/word-guess-game/master/assets/images/screenshot.png =200x200)
+![Game Screenshot](https://raw.github.com/walterioo/word-guess-game/master/assets/images/screenshot.png =200x200)
+![Psychic-Game Screenshot](https://raw.github.com/captnwalker/Psychic-Game2/master/screenshots/Psychic-Game.png)
 
 
 ## Instructions

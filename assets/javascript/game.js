@@ -1,13 +1,14 @@
 //Hang man game
-// I have to make an array and put all the words that are going to be guessed
+// Array with all the words to be guessed
 var words = ["The Witcher", "Fallout", "Warcraft", "Mass Effect", "Warframe", "Dark Souls",
-    "Call of Duty", "Battlefield", "Destiny", "Halo", "Resident Evil", "Metal Gear Solid", "Half Life",
-    "Tomb Raider", "Bioshock", "DOOM", "The Elder Scrolls", "Metro", "Stalker", "Knights of the old republic",
-    "Warhammer", "Diablo", "Starcraft", "Mario Bros", "Street Fighter", "Mortal Kombat", "Dead Space", "Star Wars",
-    "Overwatch", "Assassins Creed", "Forza Motorsport", "Gran Turismo", "Need for Speed", "Homeworld", "The Legend of Zelda", "Mega Man"];
-//I need to select a random word for the array, and asign that word to another variable to split in single letters 
-/* I need to display the lenght of the word in dashes and then when the player chooses a letter that 
-  is in the word it has to change the dash to the letter */
+    "Call of Duty", "Battlefield", "Destiny", "Halo", "Resident Evil", "Metal Gear Solid",
+     "Half Life","Tomb Raider", "Bioshock", "DOOM", "The Elder Scrolls", "Metro", "Stalker", 
+     "Knights of the old republic", "Warhammer", "Diablo", "Starcraft", "Mario Bros", "Street Fighter", 
+     "Mortal Kombat", "Dead Space", "Star Wars", "Overwatch", "Assassins Creed", "Forza Motorsport", 
+     "Gran Turismo", "Need for Speed", "Homeworld", "The Legend of Zelda", "Mega Man"
+];
+
+//Global Variables
 var wordDashes = [];
 var randomLowerCase = [];
 var random = [];
@@ -18,8 +19,8 @@ var usedLetters = [];
 var gameOver = new Audio("assets/audio/gameover.mp3");
 var winSound = new Audio("assets/audio/win.mp3");
 
-// Need to lower case all the letters
-//Function to get all indexes of the press key and peshes it to wordDashes to be displayed
+// wordDashed is the hidden word and letters are pushed to it when guessed
+//Function to get all indexes of the press key and pushes it to wordDashes to be displayed
 function getIndexes(key) {
     var index = randomLowerCase.indexOf(key);
     while (index != -1) {
@@ -27,6 +28,8 @@ function getIndexes(key) {
         index = randomLowerCase.indexOf(key, index + 1);
         console.log(wordDashes);
     }
+ 
+// Function to show gif when user wins or loses    
 }
 function showGif (par) {
     document.getElementById(par).style.visibility="visible";
@@ -37,71 +40,73 @@ function showGif (par) {
     document.getElementById("lose-gif").style.visibility="hidden";
 }*/
 
-
-/* I need to check if the pressed key exist in the randomWord string and asign the position 
-to another variable, then make an if to push the key to the wordLeght array
- */
+//Global function to start the game
 function gameStart() {
     usedLetters = [];
     wordDashes = [];
-    randomWord = words[Math.floor(Math.random() * words.length)];
-    randomLowerCase = randomWord.toLowerCase().split("");
+    randomWord = words[Math.floor(Math.random() * words.length)];   //word randomizer
+    randomLowerCase = randomWord.toLowerCase().split("");           // converts the array to lower case
     randomWord = randomWord.split("");
-    guesses = randomWord.length;
+    guesses = randomWord.length;  // guesses equals to the length of the word
     console.log(randomWord);
 
-    for (var i = 0; i < randomWord.length; i++) {
+// Creates the hidden word with "-" and pushes it to wordDahses
+  for (var i = 0; i < randomWord.length; i++) {
         wordDashes.push("-");
         if (randomWord[i] === " ") {
             wordDashes[i] = " ";
         }
     }
-    console.log(wordDashes);
-    console.log(randomLowerCase);
+    // Joins the dashed word array to be displayed in the game
     document.querySelector("#word-to-guess").textContent = wordDashes.join("");
-    console.log(wordDashes.join(""));
+    //Displays the lives 
     document.querySelector("#lives").innerHTML = guesses;
-
+    
 }
 
-
-
+// Call gameStart when function when loaded
 window.onload = gameStart;
 
+// listens to keypress and runs code
 document.onkeyup = function (event) {
     var pressKey = event.key.toLowerCase();
-    var letterExists = randomLowerCase.indexOf(pressKey);
-    
-    
-    console.log(pressKey);
+    var winChecker = 0;
+    var wordDisplay = wordDashes.join("");
+    var wordCompare = randomWord.join("");
 
+    letterExists = randomLowerCase.indexOf(pressKey); // assigns a value to letterExist of -1 if it isnt found in the random array or higher than 0 if it exists
+// This checks if repeated letters exist in the word
     if (letterExists >= 0) {
         getIndexes(pressKey);
-    } else {
+    } // only allows wrong keys to be deducted one time 
+    else if(letterExists === -1 && usedLetters.indexOf(pressKey) === -1){
         guesses--;
     }
+
     if (guesses === 0) {
         gameOver.play();
         gameStart();
         loss++;
+        winChecker = -1;
     }
-
-    console.log(guesses);
-    var wordDisplay = wordDashes.join("");
-    var wordCompare = randomWord.join("");
-    console.log(wordDisplay, wordCompare);
 
     if (wordDisplay === wordCompare) {
         wins++;
+        winChecker = 1;
         winSound.play();
-        gameStart();
+        gameStart();    
     }
 
     if (usedLetters.indexOf(pressKey) >= 0) {
-
-    } else {
+        //Add error sound for repeated keys
+    } 
+    else { // Pushes the letter to the array and displays it in the screen
         usedLetters.push(pressKey);
         document.querySelector("#used-letters").textContent = usedLetters;
+    }
+   // Clears the screen if the player wins
+    if(winChecker == 1 || winChecker == -1){
+        document.querySelector("#used-letters").textContent = " ";
     }
 
     document.querySelector("#word-to-guess").textContent = wordDashes.join("");

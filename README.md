@@ -6,7 +6,7 @@
 ### Instructions
 * Press a letter and try to guees if it exist in the hidden word
 * Your lives will be the same as the word length
-* Numbers count! 
+* Only letters work!
 * Repeated keys wont be counted
 * Have fun!
 

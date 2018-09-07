@@ -3,23 +3,35 @@ body {
     background-image: url(../images/272241.jpg);
     color: white;
     background-repeat: no-repeat;
-    background-size: 
+    line-height: 2;
+}
+h1 {
+    font-size: 28px;
+    margin: 10px;
+}
+h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+p {
+    font-size: 18px;
+
 }
 
 .container {
     width: 960px;
     margin: 0 auto;
     text-align: center;
-    margin-top: 40px;
-    
+    margin-top: 18%;
 }
 
 #text-wrapper {
     width: 70%;
     background-color: rgb(105, 105, 105, .9);
     margin: 0 auto;
-    margin-top: 25%;
+    
     padding: 20px;
+    padding-bottom: 30px;
 }
 
 #gif-wrapper{

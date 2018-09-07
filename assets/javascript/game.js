@@ -2,11 +2,12 @@
 // Array with all the words to be guessed
 var words = ["The Witcher", "Fallout", "Warcraft", "Mass Effect", "Warframe", "Dark Souls",
     "Call of Duty", "Battlefield", "Destiny", "Halo", "Resident Evil", "Metal Gear Solid",
-     "Half Life","Tomb Raider", "Bioshock", "DOOM", "The Elder Scrolls", "Metro", "Stalker", 
-     "Knights of the old republic", "Warhammer", "Diablo", "Starcraft", "Mario Bros", "Street Fighter", 
-     "Mortal Kombat", "Dead Space", "Star Wars", "Overwatch", "Assassins Creed", "Forza Motorsport", 
-     "Gran Turismo", "Need for Speed", "Homeworld", "The Legend of Zelda", "Mega Man"
-];
+    "Half Life","Tomb Raider", "Bioshock", "DOOM", "The Elder Scrolls", "Metro", "Stalker", 
+    "Knights of the old republic", "Warhammer", "Diablo", "Starcraft", "Mario Bros", "Street Fighter", 
+    "Mortal Kombat", "Dead Space", "Star Wars", "Overwatch", "Assassins Creed", "Forza Motorsport", 
+    "Gran Turismo", "Need for Speed", "Homeworld", "The Legend of Zelda", "Mega Man", "Donkey Kong", "Red Dead Redemption",
+    "Grand Theft Auto", "Monster Hunter World", "Path of Exile", "Sid Meiers Civilization", "Darksiders", "Kingdom of Amalur",
+    ];
 
 //Global Variables
 var wordDashes = [];
@@ -18,6 +19,7 @@ var wins = 0;
 var usedLetters = [];
 var gameOver = new Audio("assets/audio/gameover.mp3");
 var winSound = new Audio("assets/audio/win.mp3");
+var wordDisplay = []; // var used to compare in an if to the full word if equial wins++
 
 // wordDashed is the hidden word and letters are pushed to it when guessed
 //Function to get all indexes of the press key and pushes it to wordDashes to be displayed
@@ -61,7 +63,6 @@ function gameStart() {
     document.querySelector("#word-to-guess").textContent = wordDashes.join("");
     //Displays the lives 
     document.querySelector("#lives").innerHTML = guesses;
-    
 }
 
 // Call gameStart when function when loaded
@@ -71,30 +72,15 @@ window.onload = gameStart;
 document.onkeyup = function (event) {
     var pressKey = event.key.toLowerCase();
     var winChecker = 0;
-    var wordDisplay = wordDashes.join("");
-    var wordCompare = randomWord.join("");
-
+    var wordCompare = randomWord.join(""); // var used to compare the random word
     letterExists = randomLowerCase.indexOf(pressKey); // assigns a value to letterExist of -1 if it isnt found in the random array or higher than 0 if it exists
-// This checks if repeated letters exist in the word
+    // This checks if repeated letters exist in the word
     if (letterExists >= 0) {
         getIndexes(pressKey);
+        wordDisplay = wordDashes.join(""); // Puts the current guessed array to wordDisplay, it is used in an if to compare to the full word   
     } // only allows wrong keys to be deducted one time 
     else if(letterExists === -1 && usedLetters.indexOf(pressKey) === -1){
         guesses--;
-    }
-
-    if (guesses === 0) {
-        gameOver.play();
-        gameStart();
-        loss++;
-        winChecker = -1;
-    }
-
-    if (wordDisplay === wordCompare) {
-        wins++;
-        winChecker = 1;
-        winSound.play();
-        gameStart();    
     }
 
     if (usedLetters.indexOf(pressKey) >= 0) {
@@ -104,6 +90,21 @@ document.onkeyup = function (event) {
         usedLetters.push(pressKey);
         document.querySelector("#used-letters").textContent = usedLetters;
     }
+
+    if (guesses === 0) {
+        gameOver.play();
+        gameStart();
+        loss++;
+        winChecker = -1;
+    }
+    
+    if (wordDisplay === wordCompare) {
+        wins++;
+        winChecker = 1;
+        winSound.play();
+        gameStart();    
+    }
+
    // Clears the screen if the player wins
     if(winChecker == 1 || winChecker == -1){
         document.querySelector("#used-letters").textContent = " ";

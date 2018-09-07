@@ -97,7 +97,7 @@ document.onkeyup = function (event) {
         loss++;
         winChecker = -1;
     }
-    
+    // wordDashes feeds wordDisplay when there are no more hidden words it will compere to de orginal word in the var wordCompare
     if (wordDisplay === wordCompare) {
         wins++;
         winChecker = 1;

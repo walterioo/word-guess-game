@@ -19,6 +19,10 @@ let game = {
         "Grand Theft Auto", "Monster Hunter World", "Path of Exile", "Sid Meiers Civilization", "Darksiders", "Kingdom of Amalur",
     ],
 
+    alphabet: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+    "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "ñ"
+    ],
+
     indexes: function getIndexes(key) {
         var index = randomLowerCase.indexOf(key);
         while (index != -1) {
@@ -58,25 +62,26 @@ document.onkeyup = function (event) {
     var wordCompare = randomWord.join(""); // var used to compare the random word
     letterExists = randomLowerCase.indexOf(pressKey); // assigns a value to letterExist of -1 if it isnt found in the random array or higher than 0 if it exists
     // This checks if repeated letters exist in the word
+    
     if (letterExists >= 0) {
         game.indexes(pressKey);
         wordDisplay = wordDashes.join(""); // Puts the current guessed array to wordDisplay, it is used in an if to compare to the full word   
     } // only allows wrong keys to be deducted one time 
-    else if(letterExists === -1 && usedLetters.indexOf(pressKey) === -1){
+    else if(letterExists === -1 && usedLetters.indexOf(pressKey) === -1 && game.alphabet.indexOf(pressKey) >= 0 ){
         guesses--;
     }
 
     if (usedLetters.indexOf(pressKey) >= 0) {
         //Add error sound for repeated keys
     } 
-    else { // Pushes the letter to the array and displays it in the screen
+    else if (game.alphabet.indexOf(pressKey) >= 0) { // Pushes the letter to the array and displays it in the screen
         usedLetters.push(pressKey);
         document.querySelector("#used-letters").textContent = usedLetters;
     }
 
     if (guesses === 0) {
         gameOver.play();
-        game.start;
+        game.start();
         loss++;
         winChecker = -1;
     }
@@ -84,8 +89,8 @@ document.onkeyup = function (event) {
     if (wordDisplay === wordCompare) {
         wins++;
         winChecker = 1;
-        winSound.play();
-        game.start;  
+        winSound.play();    
+        game.start();  
     }
 
    // Clears the screen if the player wins

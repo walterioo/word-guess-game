@@ -4,7 +4,7 @@
 ## Sceenshot
 ![](/assets/images/screenshot.png)
 ## Instructions
-* Press a letter to try to guees if it exist in the hidden word
+* Press a letter and try to guees if it exist in the hidden word
 * Your lives will be the same as the word length
 * Numbers count! 
 * Repeated keys wont be counted
